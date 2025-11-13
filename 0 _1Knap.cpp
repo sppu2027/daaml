@@ -30,3 +30,5 @@ int main() {
 }
 
 // Time Complexity and Space O(n × M)
+// Space Complexity O(n × M)
+

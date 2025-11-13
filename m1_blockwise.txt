@@ -1,0 +1,90 @@
+# 🧩 Block 1: Import libraries and read dataset
+import pandas as pd
+
+# Read dataset
+df = pd.read_csv('Heart.csv')
+
+# Display first 5 rows
+df.head()
+
+
+# 🧩 Block 2: Explore basic information
+# Shape of dataset
+df.shape
+
+# Check for null values
+df.isnull()
+
+# Count of null values in each column
+df.isnull().sum()
+
+# Count of non-null values in each column
+df.count()
+
+# Data types of each column
+df.dtypes
+
+
+# 🧩 Block 3: Check for zero values
+# Identify where the values are zero
+df == 0
+
+# Show rows with zero values
+df[df == 0]
+
+# Count zero values in each column
+df[df == 0].count()
+
+
+# 🧩 Block 4: Accessing specific columns
+# Column names
+df.columns
+
+# Access single column
+df['Age']
+
+# Mean of Age column
+df['Age'].mean()
+
+# Display selected columns
+df[['Age', 'Sex', 'RestBP', 'Chol']]
+
+
+# 🧩 Block 5: Split dataset into train and test sets
+from sklearn.model_selection import train_test_split
+
+# Split data
+train, test = train_test_split(df, random_state=0, test_size=0.25)
+
+# Check shapes
+train.shape, test.shape
+
+
+# 🧩 Block 6: Create actual and predicted labels
+import numpy as np
+
+# Actual values
+actual = list(np.ones(45)) + list(np.zeros(55))
+np.array(actual)
+
+# Predicted values
+predicted = list(np.ones(40)) + list(np.zeros(52)) + list(np.ones(8))
+np.array(predicted)
+
+
+# 🧩 Block 7: Confusion matrix and evaluation metrics
+from sklearn.metrics import ConfusionMatrixDisplay
+
+# Display confusion matrix
+ConfusionMatrixDisplay.from_predictions(actual, predicted)
+
+from sklearn.metrics import classification_report
+
+# Show classification report
+print(classification_report(actual, predicted))
+
+from sklearn.metrics import accuracy_score
+
+# Calculate accuracy
+accuracy = accuracy_score(actual, predicted)
+print("Accuracy:", accuracy)

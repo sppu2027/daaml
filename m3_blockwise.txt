@@ -1,0 +1,61 @@
+# 🧩 Block 1: Import libraries and load dataset
+import pandas as pd
+import seaborn as sns
+
+df = pd.read_csv('Admission_Predict.csv')
+df.head()
+
+
+# 🧩 Block 2: Binarize the target variable
+from sklearn.preprocessing import Binarizer
+
+bi = Binarizer(threshold=0.75)
+df.columns
+df['Chance of Admit '] = bi.fit_transform(df[['Chance of Admit ']])
+df.head()
+
+
+# 🧩 Block 3: Define features and labels
+x = df.drop('Chance of Admit ', axis=1)
+y = df['Chance of Admit ']
+y = y.astype('int')
+
+x
+y
+
+
+# 🧩 Block 4: Visualize target distribution
+sns.countplot(x=y)
+y.value_counts()
+
+
+# 🧩 Block 5: Split data into train and test sets
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=0, test_size=0.25)
+x_train.shape, x_test.shape
+
+
+# 🧩 Block 6: Train Decision Tree model
+from sklearn.tree import DecisionTreeClassifier
+
+classifier = DecisionTreeClassifier(random_state=0)
+classifier.fit(x_train, y_train)
+
+y_pred = classifier.predict(x_test)
+
+
+# 🧩 Block 7: Display actual vs predicted results
+result = pd.DataFrame({
+    'Actual': y_test,
+    'Predicted': y_pred
+})
+result
+
+
+# 🧩 Block 8: Evaluate model performance
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, classification_report
+
+ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
+accuracy_score(y_test, y_pred)
+print(classification_report(y_test, y_pred))

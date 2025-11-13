@@ -1,0 +1,45 @@
+# 🧩 Block 1: Install and import libraries
+# pip install mlxtend
+import pandas as pd
+import csv
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, association_rules
+
+
+# 🧩 Block 2: Load dataset
+dataset = []
+with open('Market_Basket_Optimisation.csv') as file:
+    reader = csv.reader(file, delimiter=',')
+    for row in reader:
+        dataset += [row]
+
+dataset[1:10]
+len(dataset)
+
+
+# 🧩 Block 3: Transform data for Apriori algorithm
+te = TransactionEncoder()
+x = te.fit_transform(dataset)
+x
+len(te.columns_)
+
+df = pd.DataFrame(x, columns=te.columns_)
+df.head()
+
+# 🧩 Block 4: Apply Apriori algorithm
+frequent_itemsets = apriori(df, min_support=0.02, use_colnames=True)
+frequent_itemsets.head()
+
+# 🧩 Block 5: Generate association rules
+rules = association_rules(frequent_itemsets, metric='lift', min_threshold=1)
+
+# Display top rules sorted by lift
+rules.sort_values(by='lift', ascending=False).head()
+
+# 🧩 Block 6: Optional — explore results further
+print("Number of frequent itemsets:", len(frequent_itemsets))
+print("Number of association rules:", len(rules))
+
+# View key columns
+rules[['antecedents', 'consequents', 'support', 'confidence', 'lift']].head(10)
+

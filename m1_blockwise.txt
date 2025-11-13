@@ -64,11 +64,11 @@ train.shape, test.shape
 import numpy as np
 
 # Actual values
-actual = list(np.ones(45)) + list(np.zeros(55))
+actual = list(np.ones(45)) + list(np.zeros(450) + list(np.ones(5))
 np.array(actual)
 
 # Predicted values
-predicted = list(np.ones(40)) + list(np.zeros(52)) + list(np.ones(8))
+predicted = list(np.ones(100)) + list(np.zeros(400)) 
 np.array(predicted)
 
 
